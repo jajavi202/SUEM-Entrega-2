@@ -8,7 +8,7 @@
 #ifndef DEVICES_RGB_H_
 #define DEVICES_RGB_H_
 
-void Test_RGB();
+void Set_RGB();
 
 void setGreenStatus();
 
