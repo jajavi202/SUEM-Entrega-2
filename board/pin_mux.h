@@ -130,36 +130,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_KEY_4_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
                                                       /* @} */
 
-/*! @name PORTH3 (number 34), PTH3_KEY1
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_BOARDKEY_1_FGPIO FGPIOB             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_1_GPIO GPIOB               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_1_GPIO_PORT kGPIO_PORTH    /*!<@brief PORTB GPIO port: PORTB */
-#define BOARD_INITPINS_BOARDKEY_1_GPIO_PIN_MASK (1U << 27U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_BOARDKEY_1_PORT PORTH               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_1_PIN 3U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_BOARDKEY_1_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
-
-/*! @name PORTH4 (number 33), PTH4_KEY2
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_BOARDKEY_2_FGPIO FGPIOB             /*!<@brief FGPIO peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_2_GPIO GPIOB               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_2_GPIO_PORT kGPIO_PORTH    /*!<@brief PORTB GPIO port: PORTB */
-#define BOARD_INITPINS_BOARDKEY_2_GPIO_PIN_MASK (1U << 28U) /*!<@brief GPIO pin mask */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_BOARDKEY_2_PORT PORTH               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_BOARDKEY_2_PIN 4U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_BOARDKEY_2_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
-
 /*! @name PORTG3 (number 71), J4[15]/PTG3_GPIO4
   @{ */
 
@@ -201,6 +171,24 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_BUZ_PIN 0U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_BUZ_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
                                                     /* @} */
+
+/*! @name PORTH3 (number 34), PTH3_KEY1
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_BOARDKEY_1_PORT PORTH               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BOARDKEY_1_PIN 3U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BOARDKEY_1_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                                           /* @} */
+
+/*! @name PORTH4 (number 33), PTH4_KEY2
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_BOARDKEY_2_PORT PORTH               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BOARDKEY_2_PIN 4U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BOARDKEY_2_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                                           /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -9,10 +9,13 @@
 #include "clock_config.h"
 #include "MKE06Z4.h"
 #include "fsl_debug_console.h"
+#include "fsl_kbi.h"
+
 /* TODO: insert other include files here. */
+#include "kbi_pins.h"
+#include "states/states.h"
 
 /* TODO: insert other definitions and declarations here. */
-#define STATE_CONFIG 0
 
 /*
  * @brief   Application entry point.
@@ -20,22 +23,34 @@
 
 volatile uint8_t State;
 
+void KBI0_Setup() {
+
+}
+
+void KBI1_Setup() {
+	kbi_config_t kbi1Config;
+	kbi1Config.mode = kKBI_EdgesDetect;
+	kbi1Config.pinsEnabled = (uint32_t) (KBI1_MASK);
+	kbi1Config.pinsEdge = ~((uint32_t) (KBI1_MASK));
+	KBI_Init(KBI1, &kbi1Config);
+}
+
 int main(void) {
 
-    /* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
 #ifndef BOARD_INIT_DEBUG_CONSOLE_PERIPHERAL
-    /* Init FSL debug console. */
     BOARD_InitDebugConsole();
 #endif
 
     State = STATE_CONFIG;
+    prepareLCD();
 
     while (1) {
 		switch(State) {
-
+			case STATE_CONFIG:
+				break;
 		}
     }
 

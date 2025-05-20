@@ -9,9 +9,8 @@
 #define LCD_CONTROLLER_H_
 
 void prepareLCD();
-
 void frequencyLCD(uint8_t freq);
-
 void reactionLCD(uint8_t time);
+void clearLCD();
 
 #endif /* LCD_CONTROLLER_H_ */

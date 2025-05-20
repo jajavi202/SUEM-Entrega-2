@@ -131,12 +131,12 @@ BOARD_InitPins:
   - {pin_num: '24', peripheral: GPIOA, signal: 'GPIO, 19', pin_signal: PTC3/KBI0_P19/FTM2_CH3/ADC0_SE11, direction: INPUT}
   - {pin_num: '75', peripheral: I2C1, signal: SCL, pin_signal: PTE1/KBI1_P1/SPI0_MOSI/I2C1_SCL}
   - {pin_num: '76', peripheral: I2C1, signal: SDA, pin_signal: PTE0/KBI1_P0/SPI0_SCK/TCLK1/I2C1_SDA}
-  - {pin_num: '34', peripheral: GPIOB, signal: 'GPIO, 27', pin_signal: PTH3/KBI1_P27/I2C1_SDA, direction: INPUT}
-  - {pin_num: '33', peripheral: GPIOB, signal: 'GPIO, 28', pin_signal: PTH4/KBI1_P28/I2C1_SCL, direction: INPUT}
   - {pin_num: '71', peripheral: GPIOB, signal: 'GPIO, 19', pin_signal: PTG3/KBI1_P19, direction: OUTPUT}
   - {pin_num: '46', peripheral: ADC, signal: 'SE, 2', pin_signal: PTA6/KBI0_P6/FTM2_FLT1/ACMP1_IN0/ADC0_SE2}
   - {pin_num: '45', peripheral: ADC, signal: 'SE, 3', pin_signal: PTA7/KBI0_P7/FTM2_FLT2/ACMP1_IN1/ADC0_SE3}
   - {pin_num: '62', peripheral: FTM0, signal: 'CH, 0', pin_signal: PTA0/KBI0_P0/FTM0_CH0/I2C0_4WSCLOUT/ACMP0_IN0/ADC0_SE0, direction: OUTPUT}
+  - {pin_num: '34', peripheral: KBI1, signal: 'P, 27', pin_signal: PTH3/KBI1_P27/I2C1_SDA, direction: INPUT}
+  - {pin_num: '33', peripheral: KBI1, signal: 'P, 28', pin_signal: PTH4/KBI1_P28/I2C1_SCL, direction: INPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -205,20 +205,6 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTB19 (pin 71) */
     GPIO_PinInit(BOARD_INITPINS_PTG3_GPIO_PORT, BOARD_INITPINS_PTG3_PIN, &PTG3_config);
-
-    gpio_pin_config_t BOARDKEY_1_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTB27 (pin 34) */
-    GPIO_PinInit(BOARD_INITPINS_BOARDKEY_1_GPIO_PORT, BOARD_INITPINS_BOARDKEY_1_PIN, &BOARDKEY_1_config);
-
-    gpio_pin_config_t BOARDKEY_2_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTB28 (pin 33) */
-    GPIO_PinInit(BOARD_INITPINS_BOARDKEY_2_GPIO_PORT, BOARD_INITPINS_BOARDKEY_2_PIN, &BOARDKEY_2_config);
     /* pin 62 is configured as FTM0_CH0 */
     PORT_SetPinSelect(kPORT_FTM0CH0, kPORT_FTM0_CH0_PTA0);
     /* pin 75,76 is configured as I2C1_SCL, I2C1_SDA */

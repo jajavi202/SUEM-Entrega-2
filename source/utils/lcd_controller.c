@@ -35,3 +35,8 @@ void reactionLCD(uint8_t time){
 	LCD_setCursor(0, 1);
 	LCD_printstr(buffer);
 }
+
+void clearLCD() {
+	LCD_backlight();
+	LCD_clear();
+}
