@@ -23,6 +23,8 @@
 
 volatile uint8_t State;
 
+volatile bool g_keypressKBI1 = false;
+
 void KBI0_Setup() {
 
 }
@@ -33,6 +35,16 @@ void KBI1_Setup() {
 	kbi1Config.pinsEnabled = (uint32_t) (KBI1_MASK);
 	kbi1Config.pinsEdge = ~((uint32_t) (KBI1_MASK));
 	KBI_Init(KBI1, &kbi1Config);
+}
+
+void KBI1_IRQHandler(void){
+	if(KBI_IsInterruptRequestDetected(KBI1)){
+		KBI_DisableInterrupts(KBI1);
+
+		KBI_ClearInterruptFlag(KBI1);
+		g_keypressKBI1 = true;
+	}
+	SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void) {
