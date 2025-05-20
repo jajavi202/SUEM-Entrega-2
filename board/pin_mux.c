@@ -112,6 +112,7 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     BOARD_InitPins();
+    BOARD_InitLEDsPins();
     BOARD_InitDEBUG_UARTPins();
 }
 
@@ -228,7 +229,7 @@ void BOARD_InitPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitLEDsPins:
-- options: {coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '50', peripheral: GPIOB, signal: 'GPIO, 23', pin_signal: PTG7/KBI1_P23/FTM2_CH5/SPI1_PCS, direction: OUTPUT, gpio_init_state: 'true'}
   - {pin_num: '51', peripheral: GPIOB, signal: 'GPIO, 22', pin_signal: PTG6/KBI1_P22/FTM2_CH4/SPI1_MISO, direction: OUTPUT, gpio_init_state: 'true'}
