@@ -11,7 +11,7 @@
 #include "fsl_debug_console.h"
 
 
-void Set_RGB(uint8_t R, uint8_t G, uint8_t B){
+void Set_RGB(uint8_t R, uint8_t G, uint8_t B) {
 	uint8_t mask_set=0UL;
 	uint8_t mask_clear=0UL;
 

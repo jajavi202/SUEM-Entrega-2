@@ -21,20 +21,22 @@ volatile uint8_t Frequency = 0; // Hz
 volatile extern uint8_t State;
 
 void Configure() {
-	uint32_t *fX, *fY;
+	uint32_t fX, fY;
 
-	*fX = 0;
-	*fY = 0;
+	fX = 0;
+	fY = 0;
 
 	while (State == STATE_CONFIG) {
-		ReadJoyStick(fX, fY);
+		ReadJoyStick(&fX, &fY);
 
-		if (*fX >= AXIS_TOP_THRES) {
+		if (fX >= AXIS_TOP_THRES) {
 			ModifyFreqRegulated(true);
 		}
-		if (*fX <= AXIS_BOT_THRES) {
+		if (fX <= AXIS_BOT_THRES) {
 			ModifyFreqRegulated(false);
 		}
+
+		frequencyLCD(Frequency);
 	}
 }
 

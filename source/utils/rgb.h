@@ -8,10 +8,7 @@
 #ifndef DEVICES_RGB_H_
 #define DEVICES_RGB_H_
 
-void Set_RGB();
-
 void setGreenStatus();
-
 void setRedStatus();
 
 #endif /* DEVICES_RGB_H_ */
