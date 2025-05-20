@@ -16,6 +16,6 @@
 
 void SwitchR();
 void SwitchY();
-void SwitchB();
+void SwitchG();
 
 #endif /* SEMAPHORE_H_ */

@@ -10,6 +10,7 @@
 #include "MKE06Z4.h"
 #include "fsl_debug_console.h"
 #include "fsl_kbi.h"
+#include "fsl_adc.h"
 
 /* TODO: insert other include files here. */
 #include "kbi_pins.h"
@@ -23,10 +24,15 @@
 
 volatile uint8_t State;
 
-volatile bool g_keypressKBI1 = false;
+volatile bool kbi0Pressed = false;
+volatile bool kbi1Pressed = false;
 
 void KBI0_Setup() {
-
+	kbi_config_t kbi0Config;
+	kbi0Config.mode = kKBI_EdgesDetect;
+	kbi0Config.pinsEnabled = (uint32_t) (KBI0_MASK);
+	kbi0Config.pinsEdge = ~((uint32_t) (KBI0_MASK));
+	KBI_Init(KBI1, &kbi0Config);
 }
 
 void KBI1_Setup() {
@@ -37,13 +43,29 @@ void KBI1_Setup() {
 	KBI_Init(KBI1, &kbi1Config);
 }
 
+void KBI0_IRQHandler(void){
+	if(KBI_IsInterruptRequestDetected(KBI0)){
+		KBI_DisableInterrupts(KBI0);
+		KBI_ClearInterruptFlag(KBI0);
+		kbi0Pressed = true;
+	}
+
+	SDK_ISR_EXIT_BARRIER;
+}
 void KBI1_IRQHandler(void){
 	if(KBI_IsInterruptRequestDetected(KBI1)){
 		KBI_DisableInterrupts(KBI1);
-
 		KBI_ClearInterruptFlag(KBI1);
-		g_keypressKBI1 = true;
+
+		if (State != STATE_REACTION)
+			kbi1Pressed = true;
+
+		if (!kbi1Pressed) {
+			KBI1->SC |= KBI_SC_RSTKBSP_MASK;
+			KBI_EnableInterrupts(KBI1);
+		}
 	}
+
 	SDK_ISR_EXIT_BARRIER;
 }
 
@@ -57,11 +79,33 @@ int main(void) {
 #endif
 
     State = STATE_CONFIG;
+
+    // KBI
+    KBI0_Setup();
+    KBI1_Setup();
+
+    // LCD INIT
     prepareLCD();
+
+    // ADC INIT
+    adc_config_t adcConfigStruct;
+	ADC_GetDefaultConfig(&adcConfigStruct);
+	adcConfigStruct.ResolutionMode = kADC_Resolution12BitMode;
+	ADC_Init(ADC, &adcConfigStruct);
 
     while (1) {
 		switch(State) {
 			case STATE_CONFIG:
+				Configure();
+				break;
+			case STATE_REACTION:
+				Reaction();
+				break;
+			case STATE_WAITING:
+				Waiting();
+				break;
+			default:
+				State = STATE_CONFIG;
 				break;
 		}
     }

@@ -29,7 +29,7 @@ void frequencyLCD(uint8_t freq){
 	LCD_printstr(buffer);
 }
 
-void reactionLCD(uint8_t time){
+void reactionLCD(uint32_t time){
 	char buffer[25];
 	sprintf(buffer, "REAC: %08uus", time);
 	LCD_setCursor(0, 1);
