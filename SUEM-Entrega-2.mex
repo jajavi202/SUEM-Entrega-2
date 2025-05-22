@@ -28,8 +28,8 @@
             <pin_labels>
                <pin_label pin_num="42" pin_signal="PTB0/KBI0_P8/UART0_RX/PWT_IN1/ADC0_SE4" label="J1[2]"/>
                <pin_label pin_num="41" pin_signal="PTB1/KBI0_P9/UART0_TX/ADC0_SE5" label="J1[4]/PTB1_IRTX" identifier="IRTX"/>
-               <pin_label pin_num="28" pin_signal="PTD5/KBI0_P29/PWT_IN0" label="J1[6]"/>
-               <pin_label pin_num="2" pin_signal="PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK" label="J1[8]/PTD0_D3_PWM2"/>
+               <pin_label pin_num="28" pin_signal="PTD5/KBI0_P29/PWT_IN0" label="J1[6]" identifier="SALAE_END"/>
+               <pin_label pin_num="2" pin_signal="PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK" label="J1[8]/PTD0_D3_PWM2" identifier="SALAE_INIT"/>
                <pin_label pin_num="61" pin_signal="PTA1/KBI0_P1/FTM0_CH1/I2C0_4WSDAOUT/ACMP0_IN1/ADC0_SE1" label="J1[10]/PTA1_D4_T1/PTA1_IRRX" identifier="IRRX"/>
                <pin_label pin_num="1" pin_signal="PTD1/KBI0_P25/FTM2_CH3/SPI1_MOSI" label="J1[12]/PTD1_D5_PWM3"/>
                <pin_label pin_num="23" pin_signal="PTB4/KBI0_P12/FTM2_CH4/SPI0_MISO/ACMP1_IN2/NMI_b" label="J1[14]/J2[10]/PTB4_D6_PWM4"/>
@@ -137,6 +137,11 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="Peripheral" resourceId="KBI0" description="Peripheral KBI0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
@@ -169,33 +174,8 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="GPIOA" signal="GPIO, 16" pin_num="32" pin_signal="PTC0/KBI0_P16/FTM2_CH0/ADC0_SE8">
-                     <pin_features>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOA" signal="GPIO, 17" pin_num="31" pin_signal="PTC1/KBI0_P17/FTM2_CH1/ADC0_SE9">
-                     <pin_features>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOA" signal="GPIO, 18" pin_num="25" pin_signal="PTC2/KBI0_P18/FTM2_CH2/ADC0_SE10">
-                     <pin_features>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOA" signal="GPIO, 19" pin_num="24" pin_signal="PTC3/KBI0_P19/FTM2_CH3/ADC0_SE11">
-                     <pin_features>
-                        <pin_feature name="direction" value="INPUT"/>
-                     </pin_features>
-                  </pin>
                   <pin peripheral="I2C1" signal="SCL" pin_num="75" pin_signal="PTE1/KBI1_P1/SPI0_MOSI/I2C1_SCL"/>
                   <pin peripheral="I2C1" signal="SDA" pin_num="76" pin_signal="PTE0/KBI1_P0/SPI0_SCK/TCLK1/I2C1_SDA"/>
-                  <pin peripheral="GPIOB" signal="GPIO, 19" pin_num="71" pin_signal="PTG3/KBI1_P19">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
                   <pin peripheral="ADC" signal="SE, 2" pin_num="46" pin_signal="PTA6/KBI0_P6/FTM2_FLT1/ACMP1_IN0/ADC0_SE2"/>
                   <pin peripheral="ADC" signal="SE, 3" pin_num="45" pin_signal="PTA7/KBI0_P7/FTM2_FLT2/ACMP1_IN1/ADC0_SE3"/>
                   <pin peripheral="FTM0" signal="CH, 0" pin_num="62" pin_signal="PTA0/KBI0_P0/FTM0_CH0/I2C0_4WSCLOUT/ACMP0_IN0/ADC0_SE0">
@@ -211,6 +191,36 @@
                   <pin peripheral="KBI1" signal="P, 28" pin_num="33" pin_signal="PTH4/KBI1_P28/I2C1_SCL">
                      <pin_features>
                         <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="KBI0" signal="P, 16" pin_num="32" pin_signal="PTC0/KBI0_P16/FTM2_CH0/ADC0_SE8">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="KBI0" signal="P, 17" pin_num="31" pin_signal="PTC1/KBI0_P17/FTM2_CH1/ADC0_SE9">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="KBI0" signal="P, 18" pin_num="25" pin_signal="PTC2/KBI0_P18/FTM2_CH2/ADC0_SE10">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="KBI0" signal="P, 19" pin_num="24" pin_signal="PTC3/KBI0_P19/FTM2_CH3/ADC0_SE11">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOA" signal="GPIO, 24" pin_num="2" pin_signal="PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOA" signal="GPIO, 29" pin_num="28" pin_signal="PTD5/KBI0_P29/PWT_IN0">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -499,6 +509,28 @@
          <dcdx_configurations/>
       </dcdx>
       <periphs name="Peripherals" version="11.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="I2C Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="Unsupported version of the I2C Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.5</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.tpm" description="TPM Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.tpm" description="Unsupported version of the TPM Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.2.0</data>
+               </feature>
+            </dependency>
+         </dependencies>
          <generated_project_files>
             <file path="board/peripherals.c" update_enabled="true"/>
             <file path="board/peripherals.h" update_enabled="true"/>
@@ -510,8 +542,81 @@
             <functional_group name="BOARD_InitPeripherals" uuid="9848cc46-1dfc-443f-ba84-5517f1e68471" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
-               <dependencies/>
-               <instances/>
+               <dependencies>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_scl" description="Signal serial clock is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_sda" description="Signal serial data is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="Timer_clock" description="Timer clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM0.tmr_ch.0" description="Signal CH0 of peripheral FTM0 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <instances>
+                  <instance name="I2C1" uuid="e923ccff-6c83-47b1-aff9-e148214e7441" type="i2c" type_id="i2c_2566d7363e7e9aaedabb432110e372d7" mode="I2C_Polling" peripheral="I2C1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="fsl_i2c">
+                        <setting name="i2c_mode" value="kI2C_Master"/>
+                        <setting name="clockSource" value="BusInterfaceClock"/>
+                        <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
+                        <struct name="i2c_master_config">
+                           <setting name="enableMaster" value="true"/>
+                           <setting name="enableStopHold" value="false"/>
+                           <setting name="baudRate_Bps" value="500000"/>
+                           <setting name="glitchFilterWidth" value="0"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="FTM0" uuid="5126e91c-cb23-4d59-85b6-5a4379804903" type="tpm" type_id="tpm_57c05d48de4b4b3586950b918022efb7" mode="CenterAligned_FTM" peripheral="FTM0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="tpm_center_aligned_mode">
+                        <array name="tpm_center_aligned_channels_config">
+                           <struct name="0">
+                              <setting name="channelId" value="FTM0_PTA0"/>
+                              <setting name="chnlNumber" value="kTPM_Chnl_0"/>
+                              <setting name="level" value="kTPM_HighTrue"/>
+                              <setting name="dutyCyclePercent" value="50"/>
+                              <setting name="enable_chan_irq" value="false"/>
+                           </struct>
+                        </array>
+                     </config_set>
+                     <config_set name="tpm_main_config">
+                        <struct name="tpm_config">
+                           <setting name="clockSource" value="kTPM_SystemClock"/>
+                           <setting name="tpmSrcClkFreq" value="BOARD_BootClockRUN"/>
+                           <setting name="prescale" value="kTPM_Prescale_Divide_1"/>
+                           <setting name="timerFrequency" value="500"/>
+                        </struct>
+                        <set name="timer_interrupts">
+                           <selected/>
+                        </set>
+                        <setting name="enable_irq" value="false"/>
+                        <struct name="tpm_interrupt">
+                           <setting name="IRQn" value="FTM0_IRQn"/>
+                           <setting name="enable_interrrupt" value="enabled"/>
+                           <setting name="enable_priority" value="false"/>
+                           <setting name="priority" value="0"/>
+                           <setting name="enable_custom_name" value="false"/>
+                        </struct>
+                        <setting name="EnableTimerInInit" value="true"/>
+                     </config_set>
+                  </instance>
+               </instances>
             </functional_group>
          </functional_groups>
          <components>

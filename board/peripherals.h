@@ -6,9 +6,45 @@
 #ifndef _PERIPHERALS_H_
 #define _PERIPHERALS_H_
 
+/***********************************************************************************************************************
+ * Included files
+ **********************************************************************************************************************/
+#include "fsl_common.h"
+#include "fsl_i2c.h"
+#include "fsl_clock.h"
+#include "fsl_tpm.h"
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
+
+/***********************************************************************************************************************
+ * Definitions
+ **********************************************************************************************************************/
+/* Definitions for BOARD_InitPeripherals functional group */
+/* BOARD_InitPeripherals defines for I2C1 */
+/* Definition of peripheral ID */
+#define I2C1_PERIPHERAL I2C1
+/* Definition of the clock source */
+#define I2C1_CLOCK_SOURCE I2C1_CLK_SRC
+/* Definition of the clock source frequency */
+#define I2C1_CLK_FREQ 20000000UL
+/* Definition of peripheral ID */
+#define FTM0_PERIPHERAL FTM0
+/* Definition of the clock source frequency */
+#define FTM0_CLOCK_SOURCE 40000000UL
+/* FTM0 interrupt vector ID (number). */
+#define FTM0_IRQN FTM0_IRQn
+/* FTM0 interrupt handler identifier. */
+#define FTM0_IRQHANDLER FTM0_IRQHandler
+/* Definition of FTM0 channel number 0 */
+#define FTM0_FTM0_PTA0_CHANNEL kTPM_Chnl_0
+
+/***********************************************************************************************************************
+ * Global variables
+ **********************************************************************************************************************/
+extern const i2c_master_config_t I2C1_config;
+extern const tpm_config_t FTM0_config;
 
 /***********************************************************************************************************************
  * Initialization functions

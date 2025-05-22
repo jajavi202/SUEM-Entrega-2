@@ -32,7 +32,7 @@ void KBI0_Setup() {
 	kbi0Config.mode = kKBI_EdgesDetect;
 	kbi0Config.pinsEnabled = (uint32_t) (KBI0_MASK);
 	kbi0Config.pinsEdge = ~((uint32_t) (KBI0_MASK));
-	KBI_Init(KBI1, &kbi0Config);
+	KBI_Init(KBI0, &kbi0Config);
 }
 
 void KBI1_Setup() {

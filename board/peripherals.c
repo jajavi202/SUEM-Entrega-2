@@ -51,10 +51,109 @@ component:
 #include "peripherals.h"
 
 /***********************************************************************************************************************
+ * BOARD_InitPeripherals functional group
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * I2C1 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'I2C1'
+- type: 'i2c'
+- mode: 'I2C_Polling'
+- custom_name_enabled: 'false'
+- type_id: 'i2c_2566d7363e7e9aaedabb432110e372d7'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'I2C1'
+- config_sets:
+  - fsl_i2c:
+    - i2c_mode: 'kI2C_Master'
+    - clockSource: 'BusInterfaceClock'
+    - clockSourceFreq: 'BOARD_BootClockRUN'
+    - i2c_master_config:
+      - enableMaster: 'true'
+      - enableStopHold: 'false'
+      - baudRate_Bps: '500000'
+      - glitchFilterWidth: '0'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const i2c_master_config_t I2C1_config = {
+  .enableMaster = true,
+  .enableStopHold = false,
+  .baudRate_Bps = 500000UL,
+  .glitchFilterWidth = 0U
+};
+
+static void I2C1_init(void) {
+  /* Initialization function */
+  I2C_MasterInit(I2C1_PERIPHERAL, &I2C1_config, I2C1_CLK_FREQ);
+}
+
+/***********************************************************************************************************************
+ * FTM0 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'FTM0'
+- type: 'tpm'
+- mode: 'CenterAligned_FTM'
+- custom_name_enabled: 'false'
+- type_id: 'tpm_57c05d48de4b4b3586950b918022efb7'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'FTM0'
+- config_sets:
+  - tpm_center_aligned_mode:
+    - tpm_center_aligned_channels_config:
+      - 0:
+        - channelId: 'FTM0_PTA0'
+        - chnlNumber: 'kTPM_Chnl_0'
+        - level: 'kTPM_HighTrue'
+        - dutyCyclePercent: '50'
+        - enable_chan_irq: 'false'
+  - tpm_main_config:
+    - tpm_config:
+      - clockSource: 'kTPM_SystemClock'
+      - tpmSrcClkFreq: 'BOARD_BootClockRUN'
+      - prescale: 'kTPM_Prescale_Divide_1'
+      - timerFrequency: '500'
+    - timer_interrupts: ''
+    - enable_irq: 'false'
+    - tpm_interrupt:
+      - IRQn: 'FTM0_IRQn'
+      - enable_interrrupt: 'enabled'
+      - enable_priority: 'false'
+      - priority: '0'
+      - enable_custom_name: 'false'
+    - EnableTimerInInit: 'true'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const tpm_config_t FTM0_config = {
+  .prescale = kTPM_Prescale_Divide_1,
+};
+const tpm_chnl_pwm_signal_param_t FTM0_centerPwmSignalParams[] = { 
+  {
+    .chnlNumber = kTPM_Chnl_0,
+    .level = kTPM_HighTrue,
+    .dutyCyclePercent = 50U,
+  }
+};
+
+static void FTM0_init(void) {
+  TPM_Init(FTM0_PERIPHERAL, &FTM0_config);
+  TPM_SetupPwm(FTM0_PERIPHERAL, FTM0_centerPwmSignalParams, sizeof(FTM0_centerPwmSignalParams) / sizeof(tpm_chnl_pwm_signal_param_t), kTPM_CenterAlignedPwm, 500U, FTM0_CLOCK_SOURCE);
+  TPM_StartTimer(FTM0_PERIPHERAL, kTPM_SystemClock);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
+  /* Initialize components */
+  I2C1_init();
+  FTM0_init();
 }
 
 /***********************************************************************************************************************

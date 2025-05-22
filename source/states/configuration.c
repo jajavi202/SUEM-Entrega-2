@@ -17,7 +17,7 @@
 #define MAX_FREQ 10
 #define MIN_FREQ 1
 
-volatile uint8_t Frequency = 1; // Hz
+volatile uint8_t Frequency = 1U; // Hz
 volatile extern uint8_t State;
 
 void Configure() {
@@ -32,7 +32,13 @@ void Configure() {
 	ADC_EnableAnalogInput(ADC, mask, true);
 
 	clearLCD();
+	setRedStatus();
 	while (State == STATE_CONFIG) {
+		frequencyLCD(Frequency);
+		SwitchR();
+		SDK_DelayAtLeastUs(1000000/Frequency, CLOCK_GetFreq(kCLOCK_CoreSysClk));
+		SwitchR();
+
 		ReadJoyStick(&fX, &fY);
 
 		if (fX >= AXIS_TOP_THRES) {
@@ -41,11 +47,6 @@ void Configure() {
 		if (fX <= AXIS_BOT_THRES) {
 			ModifyFreqRegulated(false);
 		}
-
-		frequencyLCD(Frequency);
-		SwitchR();
-		SDK_DelayAtLeastUs(1000000, Frequency);
-		SwitchR();
 	}
 
 	ADC_EnableAnalogInput(ADC, mask, false);

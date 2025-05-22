@@ -17,12 +17,13 @@ volatile extern bool kbi0Pressed;
 
 void Reaction() {
 	uint32_t time = 0;
+	setGreenStatus();
 
 	SwitchR();
-	SDK_DelayAtLeastUs(1000000, Frequency);
+	SDK_DelayAtLeastUs(1000000/Frequency, CLOCK_GetFreq(kCLOCK_CoreSysClk));
 	SwitchR();
 	SwitchY();
-	SDK_DelayAtLeastUs(1000000, Frequency);
+	SDK_DelayAtLeastUs(1000000/Frequency, CLOCK_GetFreq(kCLOCK_CoreSysClk));
 	SwitchY();
 	SwitchG();
 

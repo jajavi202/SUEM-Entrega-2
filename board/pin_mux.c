@@ -16,8 +16,8 @@ board: FRDM-KE06Z
 pin_labels:
 - {pin_num: '42', pin_signal: PTB0/KBI0_P8/UART0_RX/PWT_IN1/ADC0_SE4, label: 'J1[2]'}
 - {pin_num: '41', pin_signal: PTB1/KBI0_P9/UART0_TX/ADC0_SE5, label: 'J1[4]/PTB1_IRTX', identifier: IRTX}
-- {pin_num: '28', pin_signal: PTD5/KBI0_P29/PWT_IN0, label: 'J1[6]'}
-- {pin_num: '2', pin_signal: PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK, label: 'J1[8]/PTD0_D3_PWM2'}
+- {pin_num: '28', pin_signal: PTD5/KBI0_P29/PWT_IN0, label: 'J1[6]', identifier: SALAE_END}
+- {pin_num: '2', pin_signal: PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK, label: 'J1[8]/PTD0_D3_PWM2', identifier: SALAE_INIT}
 - {pin_num: '61', pin_signal: PTA1/KBI0_P1/FTM0_CH1/I2C0_4WSDAOUT/ACMP0_IN1/ADC0_SE1, label: 'J1[10]/PTA1_D4_T1/PTA1_IRRX', identifier: IRRX}
 - {pin_num: '1', pin_signal: PTD1/KBI0_P25/FTM2_CH3/SPI1_MOSI, label: 'J1[12]/PTD1_D5_PWM3'}
 - {pin_num: '23', pin_signal: PTB4/KBI0_P12/FTM2_CH4/SPI0_MISO/ACMP1_IN2/NMI_b, label: 'J1[14]/J2[10]/PTB4_D6_PWM4'}
@@ -125,18 +125,19 @@ BOARD_InitPins:
   - {pin_num: '74', peripheral: GPIOB, signal: 'GPIO, 16', pin_signal: PTG0/KBI1_P16, direction: OUTPUT}
   - {pin_num: '73', peripheral: GPIOB, signal: 'GPIO, 17', pin_signal: PTG1/KBI1_P17, direction: OUTPUT}
   - {pin_num: '72', peripheral: GPIOB, signal: 'GPIO, 18', pin_signal: PTG2/KBI1_P18, direction: OUTPUT}
-  - {pin_num: '32', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: PTC0/KBI0_P16/FTM2_CH0/ADC0_SE8, direction: INPUT}
-  - {pin_num: '31', peripheral: GPIOA, signal: 'GPIO, 17', pin_signal: PTC1/KBI0_P17/FTM2_CH1/ADC0_SE9, direction: INPUT}
-  - {pin_num: '25', peripheral: GPIOA, signal: 'GPIO, 18', pin_signal: PTC2/KBI0_P18/FTM2_CH2/ADC0_SE10, direction: INPUT}
-  - {pin_num: '24', peripheral: GPIOA, signal: 'GPIO, 19', pin_signal: PTC3/KBI0_P19/FTM2_CH3/ADC0_SE11, direction: INPUT}
   - {pin_num: '75', peripheral: I2C1, signal: SCL, pin_signal: PTE1/KBI1_P1/SPI0_MOSI/I2C1_SCL}
   - {pin_num: '76', peripheral: I2C1, signal: SDA, pin_signal: PTE0/KBI1_P0/SPI0_SCK/TCLK1/I2C1_SDA}
-  - {pin_num: '71', peripheral: GPIOB, signal: 'GPIO, 19', pin_signal: PTG3/KBI1_P19, direction: OUTPUT}
   - {pin_num: '46', peripheral: ADC, signal: 'SE, 2', pin_signal: PTA6/KBI0_P6/FTM2_FLT1/ACMP1_IN0/ADC0_SE2}
   - {pin_num: '45', peripheral: ADC, signal: 'SE, 3', pin_signal: PTA7/KBI0_P7/FTM2_FLT2/ACMP1_IN1/ADC0_SE3}
   - {pin_num: '62', peripheral: FTM0, signal: 'CH, 0', pin_signal: PTA0/KBI0_P0/FTM0_CH0/I2C0_4WSCLOUT/ACMP0_IN0/ADC0_SE0, direction: OUTPUT}
   - {pin_num: '34', peripheral: KBI1, signal: 'P, 27', pin_signal: PTH3/KBI1_P27/I2C1_SDA, direction: INPUT}
   - {pin_num: '33', peripheral: KBI1, signal: 'P, 28', pin_signal: PTH4/KBI1_P28/I2C1_SCL, direction: INPUT}
+  - {pin_num: '32', peripheral: KBI0, signal: 'P, 16', pin_signal: PTC0/KBI0_P16/FTM2_CH0/ADC0_SE8, direction: INPUT}
+  - {pin_num: '31', peripheral: KBI0, signal: 'P, 17', pin_signal: PTC1/KBI0_P17/FTM2_CH1/ADC0_SE9, direction: INPUT}
+  - {pin_num: '25', peripheral: KBI0, signal: 'P, 18', pin_signal: PTC2/KBI0_P18/FTM2_CH2/ADC0_SE10, direction: INPUT}
+  - {pin_num: '24', peripheral: KBI0, signal: 'P, 19', pin_signal: PTC3/KBI0_P19/FTM2_CH3/ADC0_SE11, direction: INPUT}
+  - {pin_num: '2', peripheral: GPIOA, signal: 'GPIO, 24', pin_signal: PTD0/KBI0_P24/FTM2_CH2/SPI1_SCK, direction: OUTPUT}
+  - {pin_num: '28', peripheral: GPIOA, signal: 'GPIO, 29', pin_signal: PTD5/KBI0_P29/PWT_IN0, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -150,33 +151,19 @@ BOARD_InitPins:
 void BOARD_InitPins(void)
 {
 
-    gpio_pin_config_t KEY_1_config = {
-        .pinDirection = kGPIO_DigitalInput,
+    gpio_pin_config_t SALAE_INIT_config = {
+        .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTA16 (pin 32) */
-    GPIO_PinInit(BOARD_INITPINS_KEY_1_GPIO_PORT, BOARD_INITPINS_KEY_1_PIN, &KEY_1_config);
+    /* Initialize GPIO functionality on pin PTA24 (pin 2) */
+    GPIO_PinInit(BOARD_INITPINS_SALAE_INIT_GPIO_PORT, BOARD_INITPINS_SALAE_INIT_PIN, &SALAE_INIT_config);
 
-    gpio_pin_config_t KEY_2_config = {
-        .pinDirection = kGPIO_DigitalInput,
+    gpio_pin_config_t SALAE_END_config = {
+        .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTA17 (pin 31) */
-    GPIO_PinInit(BOARD_INITPINS_KEY_2_GPIO_PORT, BOARD_INITPINS_KEY_2_PIN, &KEY_2_config);
-
-    gpio_pin_config_t KEY_3_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTA18 (pin 25) */
-    GPIO_PinInit(BOARD_INITPINS_KEY_3_GPIO_PORT, BOARD_INITPINS_KEY_3_PIN, &KEY_3_config);
-
-    gpio_pin_config_t KEY_4_config = {
-        .pinDirection = kGPIO_DigitalInput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTA19 (pin 24) */
-    GPIO_PinInit(BOARD_INITPINS_KEY_4_GPIO_PORT, BOARD_INITPINS_KEY_4_PIN, &KEY_4_config);
+    /* Initialize GPIO functionality on pin PTA29 (pin 28) */
+    GPIO_PinInit(BOARD_INITPINS_SALAE_END_GPIO_PORT, BOARD_INITPINS_SALAE_END_PIN, &SALAE_END_config);
 
     gpio_pin_config_t LED_G_config = {
         .pinDirection = kGPIO_DigitalOutput,
@@ -198,13 +185,6 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTB18 (pin 72) */
     GPIO_PinInit(BOARD_INITPINS_LED_Y_GPIO_PORT, BOARD_INITPINS_LED_Y_PIN, &LED_Y_config);
-
-    gpio_pin_config_t PTG3_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 0U
-    };
-    /* Initialize GPIO functionality on pin PTB19 (pin 71) */
-    GPIO_PinInit(BOARD_INITPINS_PTG3_GPIO_PORT, BOARD_INITPINS_PTG3_PIN, &PTG3_config);
     /* pin 62 is configured as FTM0_CH0 */
     PORT_SetPinSelect(kPORT_FTM0CH0, kPORT_FTM0_CH0_PTA0);
     /* pin 75,76 is configured as I2C1_SCL, I2C1_SDA */
