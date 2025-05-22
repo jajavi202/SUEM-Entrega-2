@@ -111,5 +111,8 @@ int main(void) {
     }
 
 
+    KBI_Deinit(KBI0);
+    KBI_Deinit(KBI1);
+
     return 0 ;
 }

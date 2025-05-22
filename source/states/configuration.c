@@ -8,6 +8,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "fsl_clock.h"
+#include "fsl_kbi.h"
+#include "kbi_pins.h"
 #include "configuration.h"
 #include "states.h"
 
@@ -19,6 +21,7 @@
 
 volatile uint8_t Frequency = 1U; // Hz
 volatile extern uint8_t State;
+volatile extern bool kbi1Pressed;
 
 void Configure() {
 	uint32_t fX, fY;
@@ -41,11 +44,21 @@ void Configure() {
 
 		ReadJoyStick(&fX, &fY);
 
-		if (fX >= AXIS_TOP_THRES) {
+		if (fY >= AXIS_TOP_THRES) {
+			ModifyFreqRegulated(false);
+		}
+		if (fY <= AXIS_BOT_THRES) {
 			ModifyFreqRegulated(true);
 		}
-		if (fX <= AXIS_BOT_THRES) {
-			ModifyFreqRegulated(false);
+
+		if (kbi1Pressed) {
+			if (KBI_GetSourcePinStatus(KBI1) & KBI1_BOARD_KEY1)
+				State = STATE_REACTION;
+			else {
+				kbi1Pressed = false;
+				KBI1->SC |= KBI_SC_RSTKBSP_MASK;
+				KBI_EnableInterrupts(KBI1);
+			}
 		}
 	}
 

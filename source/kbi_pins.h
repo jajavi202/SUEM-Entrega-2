@@ -19,6 +19,6 @@
 #define KBI0_KEY_3 (1U << 18U)
 #define KBI0_KEY_4 (1U << 19U)
 
-#define KBI0_MASK (KBI0_KEY_1 | KBI0_KEY_2 | KBI0_KEY_3 | KBI0_KEY_4)
+#define KBI0_MASK (KBI0_KEY_1) // | KBI0_KEY_2 | KBI0_KEY_3 | KBI0_KEY_4)
 
 #endif /* KBI_PINS_H_ */
